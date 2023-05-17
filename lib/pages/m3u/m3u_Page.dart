@@ -14,7 +14,6 @@ import 'package:http/http.dart' as http;
 
 import '../../model/m3uModel.dart';
 import '../../sqlhelpterdb.dart';
-import 'databaseService.dart';
 
 class M3uPage extends StatefulWidget {
   const M3uPage({Key? key}) : super(key: key);
@@ -39,12 +38,18 @@ class _M3uPageState extends State<M3uPage> {
         itemBuilder: (context, DataSnapshot spons, Animation<double> animation,
             int index) {
           DataModel model = DataModel.fromSnapshot(spons);
-          return ListTile(
-            onTap: () =>
-                _createPlayList(model.name.toString(), model.link.toString()),
-            leading: Icon(Icons.tv),
-            title: Text(model.name.toString()),
-          );
+          if (model.name == null) {
+            return CircularProgressIndicator(
+              backgroundColor: Colors.green,
+            );
+          } else {
+            return ListTile(
+              onTap: () =>
+                  _createPlayList(model.name.toString(), model.link.toString()),
+              leading: Icon(Icons.tv),
+              title: Text(model.name.toString()),
+            );
+          }
         },
       ),
     );
@@ -65,7 +70,6 @@ Future<void> _createPlayList(String name, String link) async {
     _addItem(entry.title, entry.link, entry.attributes["tvg-logo"], name);
   }
   await SQLHelper.createPlayList(name);
-  Get.back();
 }
 
 // Insert a new item to the database
@@ -73,5 +77,4 @@ Future<void> _addItem(
     String _title, String _link, String? _logo, String cat) async {
   await SQLHelper.createItem(_title, _link, _logo, cat);
   log('movieTitle:${SQLHelper.getAllPlayList()}');
-
 }

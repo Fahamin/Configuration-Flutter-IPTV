@@ -62,6 +62,7 @@ class SQLHelper {
 // created_at: the time that the item was created. It will be automatically handled by SQLite
 
   static Future<sql.Database> db() async {
+    var databasesPath = await getDatabasesPath();
     return await sql.openDatabase(
       DATABASE_NAME,
       version: VERSTION,

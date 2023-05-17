@@ -13,7 +13,7 @@ class Routes {
 
   static String playlist = '/playlist';
 
-  static String createAccount = '/createAccount';
+  static String buildPage = '/buildPage';
 
   static String cardPage = '/cardPage';
 
@@ -38,10 +38,16 @@ appRoutes() => [
         transition: Transition.leftToRightWithFade,
         transitionDuration: Duration(milliseconds: 500),
       ),
-  GetPage(
-    name: Routes.playlist,
-    page: () => PlaylistPage(),
-    transition: Transition.leftToRightWithFade,
-    transitionDuration: Duration(milliseconds: 500),
-  ),
+      GetPage(
+        name: Routes.playlist,
+        page: () => PlaylistPage(),
+        transition: Transition.leftToRightWithFade,
+        transitionDuration: Duration(milliseconds: 500),
+      ),
+      GetPage(
+        name: Routes.buildPage,
+        page: () => PlaylistPage(),
+        transition: Transition.leftToRightWithFade,
+        transitionDuration: Duration(milliseconds: 500),
+      ),
     ];
