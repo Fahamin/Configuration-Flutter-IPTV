@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:setup_config_wizard/pages/build/build_page.dart';
 
 import '../pages/homePage.dart';
 import '../pages/m3u/m3u_Page.dart';
@@ -46,7 +47,7 @@ appRoutes() => [
       ),
       GetPage(
         name: Routes.buildPage,
-        page: () => PlaylistPage(),
+        page: () => BuildPage(),
         transition: Transition.leftToRightWithFade,
         transitionDuration: Duration(milliseconds: 500),
       ),

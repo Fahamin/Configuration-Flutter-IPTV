@@ -69,6 +69,20 @@ class NavDrawer extends StatelessWidget {
                 color: Colors.grey,
               ),
               ListTile(
+                title: Text("Build Page"),
+                leading: IconButton(
+                  icon: Icon(Icons.home),
+                  onPressed: () {},
+                ),
+                onTap: () {
+                  Get.back();
+                  Get.toNamed(Routes.buildPage);
+                },
+              ),
+              Divider(
+                color: Colors.grey,
+              ),
+              ListTile(
                 title: Text("M3u Page"),
                 leading: IconButton(
                   icon: Icon(Icons.account_circle),
@@ -77,8 +91,6 @@ class NavDrawer extends StatelessWidget {
                 onTap: () {
                   Get.back();
                   Get.toNamed(Routes.m3uPage);
-
-
                 },
               ),
               Divider(
