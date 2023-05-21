@@ -69,14 +69,13 @@ Future<void> _createPlayList(String name, String link) async {
   m3u = await M3uList.load(response.body);
   for (var entry in m3u.items) {
     log('movieTitle:${entry.title}');
-    _addItem(entry.title, entry.link, entry.attributes["tvg-logo"], name);
+    _addChannel(entry.title, entry.link, entry.attributes["tvg-logo"], name);
   }
   await SQLHelper.createPlayList(name);
 }
 
 // Insert a new item to the database
-Future<void> _addItem(
+Future<void> _addChannel(
     String _title, String _link, String? _logo, String cat) async {
-  await SQLHelper.createItem(_title, _link, _logo, cat);
-  log('movieTitle:${SQLHelper.getAllPlayList()}');
+  await SQLHelper.AddChannel(_title, _link, _logo, cat);
 }

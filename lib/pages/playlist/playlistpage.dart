@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:setup_config_wizard/ProviderHandaler/ProviderHandle.dart';
 
 import '../../DB/sqfliteHelper.dart';
+import '../../RouteManage/routesall.dart';
 import '../../navigation/nav_Drawer.dart';
 
 class PlaylistPage extends StatelessWidget {
@@ -27,7 +30,15 @@ class PlaylistPage extends StatelessWidget {
                 return ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (BuildContext con, int index) {
-                      return ListTile(title: Text(list[index]['title']));
+                      return ListTile(
+                        onTap: () {
+                          Get.toNamed(Routes.player,
+                              arguments: list[index]['title']);
+                        },
+                        title: Text(list[index]['title']),
+                        trailing: Icon(Icons.more_vert),
+                        leading: Icon(Icons.link),
+                      );
                     });
               });
         }),

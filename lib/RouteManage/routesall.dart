@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:setup_config_wizard/pages/build/build_page.dart';
 import 'package:setup_config_wizard/pages/iptv_page.dart';
+import 'package:setup_config_wizard/pages/player_page.dart';
 
 import '../pages/homePage.dart';
 import '../pages/m3u/m3u_Page.dart';
@@ -19,7 +20,7 @@ class Routes {
 
   static String iptv = '/iptv';
 
-  static String categoryPage = '/categoryPage';
+  static String player = '/player';
 
   static String detailsPage = '/detailsPage';
 
@@ -55,6 +56,12 @@ appRoutes() => [
       GetPage(
         name: Routes.iptv,
         page: () => IptvPage(),
+        transition: Transition.leftToRightWithFade,
+        transitionDuration: Duration(milliseconds: 500),
+      ),
+      GetPage(
+        name: Routes.player,
+        page: () => PlayerPage(),
         transition: Transition.leftToRightWithFade,
         transitionDuration: Duration(milliseconds: 500),
       ),

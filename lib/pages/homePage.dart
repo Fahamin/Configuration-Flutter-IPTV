@@ -6,7 +6,6 @@ import 'package:d_view/d_view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sn_progress_dialog/options/completed.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';

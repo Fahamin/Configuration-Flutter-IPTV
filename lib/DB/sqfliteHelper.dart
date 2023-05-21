@@ -73,7 +73,7 @@ class SQLHelper {
   }
 
   // Create new item (journal)
-  static Future<int> createItem(
+  static Future<int> AddChannel(
       String title, String link, String? logo, String cat) async {
     final db = await SQLHelper.db();
 

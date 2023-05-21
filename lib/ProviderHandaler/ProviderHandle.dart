@@ -6,7 +6,7 @@ final playListProvidr = FutureProvider.autoDispose((ref) async {
   return await SQLHelper.getAllPlayList();
 });
 
-
 final channelListProvider = FutureProvider.autoDispose((ref) async {
   return await SQLHelper.getAllChannel();
 });
+
