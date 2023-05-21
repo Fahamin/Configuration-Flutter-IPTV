@@ -62,57 +62,63 @@ class NavDrawer extends StatelessWidget {
                 ),
                 onTap: () {
                   Get.back();
-                  Get.toNamed(Routes.playlist);
+                  Get.offNamed(Routes.homePage);
                 },
               ),
-              Divider(
-                color: Colors.grey,
-              ),
+
               ListTile(
-                title: Text("Build Page"),
+                title: Text("Build DownLoad"),
                 leading: IconButton(
-                  icon: Icon(Icons.home),
+                  icon: Icon(Icons.dashboard_customize_rounded),
                   onPressed: () {},
                 ),
                 onTap: () {
                   Get.back();
-                  Get.toNamed(Routes.buildPage);
+                  Get.offNamed(Routes.buildPage);
                 },
               ),
-              Divider(
-                color: Colors.grey,
-              ),
+
               ListTile(
-                title: Text("M3u Page"),
+                title: Text("M3U"),
                 leading: IconButton(
-                  icon: Icon(Icons.account_circle),
+                  icon: Icon(Icons.link),
                   onPressed: () {},
                 ),
                 onTap: () {
                   Get.back();
-                  Get.toNamed(Routes.m3uPage);
+                  Get.offNamed(Routes.m3uPage);
                 },
               ),
-              Divider(
-                color: Colors.grey,
+
+              ListTile(
+                title: Text("IPTV"),
+                leading: IconButton(
+                  icon: Icon(Icons.tv),
+                  onPressed: () {},
+                ),
+                onTap: () {
+                  Get.back();
+                  Get.toNamed(Routes.iptv);
+                },
               ),
+              /*Divider(
+                color: Colors.grey,
+              ),*/
               ListTile(
                 title: Text("Favorite List"),
                 leading: IconButton(
-                  icon: Icon(Icons.account_circle),
+                  icon: Icon(Icons.bookmark),
                   onPressed: () {},
                 ),
                 onTap: () {
                   Get.off("");
                 },
               ),
-              Divider(
-                color: Colors.grey,
-              ),
+
               ListTile(
                 title: Text("Contact"),
                 leading: IconButton(
-                  icon: Icon(Icons.contact_page),
+                  icon: Icon(Icons.email),
                   onPressed: () {},
                 ),
                 onTap: () {

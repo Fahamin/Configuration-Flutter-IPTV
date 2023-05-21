@@ -13,7 +13,8 @@ import 'package:m3u_parser_nullsafe/m3u_parser_nullsafe.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/m3uModel.dart';
-import '../../sqlhelpterdb.dart';
+import '../../DB/sqfliteHelper.dart';
+import '../../navigation/nav_Drawer.dart';
 
 class M3uPage extends StatefulWidget {
   const M3uPage({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class _M3uPageState extends State<M3uPage> {
         title: Text("M3U List"),
         centerTitle: true,
       ),
+      drawer: NavDrawer(),
       body: FirebaseAnimatedList(
         scrollDirection: Axis.vertical,
         query: dataBaseRef,

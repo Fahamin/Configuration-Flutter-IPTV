@@ -84,7 +84,7 @@ class SQLHelper {
   }
 
   // Read all items (journals)
-  static Future<List<Map<String, dynamic>>> getAllItems() async {
+  static Future<List<Map<String, dynamic>>> getAllChannel() async {
     final db = await SQLHelper.db();
     return db.query(TABLE_NAME, orderBy: "id");
   }
@@ -96,7 +96,7 @@ class SQLHelper {
     return db.query(TABLE_NAME, where: "id = ?", whereArgs: [id], limit: 1);
   }
 
-  static Future<List<Map<String, dynamic>>> getItemByCategory(
+  static Future<List<Map<String, dynamic>>> getChannelByCategory(
       String cat) async {
     final db = await SQLHelper.db();
     return db.query(TABLE_NAME, where: "cat = ?", whereArgs: [cat]);

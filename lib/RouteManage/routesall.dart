@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:setup_config_wizard/pages/build/build_page.dart';
+import 'package:setup_config_wizard/pages/iptv_page.dart';
 
 import '../pages/homePage.dart';
 import '../pages/m3u/m3u_Page.dart';
@@ -16,7 +17,7 @@ class Routes {
 
   static String buildPage = '/buildPage';
 
-  static String cardPage = '/cardPage';
+  static String iptv = '/iptv';
 
   static String categoryPage = '/categoryPage';
 
@@ -48,6 +49,12 @@ appRoutes() => [
       GetPage(
         name: Routes.buildPage,
         page: () => BuildPage(),
+        transition: Transition.leftToRightWithFade,
+        transitionDuration: Duration(milliseconds: 500),
+      ),
+      GetPage(
+        name: Routes.iptv,
+        page: () => IptvPage(),
         transition: Transition.leftToRightWithFade,
         transitionDuration: Duration(milliseconds: 500),
       ),

@@ -6,6 +6,7 @@ import 'package:setup_config_wizard/model/buildModel.dart';
 import 'package:setup_config_wizard/pages/build/custom_listtile.dart';
 
 import '../../model/m3uModel.dart';
+import '../../navigation/nav_Drawer.dart';
 
 class BuildPage extends StatefulWidget {
   const BuildPage({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class _BuildPageState extends State<BuildPage> {
         title: Text("Build List"),
         centerTitle: true,
       ),
+      drawer: NavDrawer(),
       body: FirebaseAnimatedList(
         scrollDirection: Axis.vertical,
         query: dataBaseRef,
