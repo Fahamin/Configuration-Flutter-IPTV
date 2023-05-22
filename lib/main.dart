@@ -4,19 +4,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:provider/provider.dart';
 
 import 'RouteManage/routesall.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
-  await Hive.initFlutter();
-  // await Hive.deleteBoxFromDisk('shopping_box');
-  await Hive.openBox('testBox');
-
   runApp(ProviderScope(child: MyApp()));
 }
 

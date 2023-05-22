@@ -10,14 +10,14 @@ import '../DB/sqfliteHelper.dart';
 import '../ProviderHandaler/ProviderHandle.dart';
 import '../navigation/nav_Drawer.dart';
 
-class PlayerPage extends StatefulWidget {
-  PlayerPage({Key? key}) : super(key: key);
+class PlayerPage2 extends StatefulWidget {
+  PlayerPage2({Key? key}) : super(key: key);
 
   @override
-  State<PlayerPage> createState() => _PlayerPageState();
+  State<PlayerPage2> createState() => _PlayerPageState2();
 }
 
-class _PlayerPageState extends State<PlayerPage> {
+class _PlayerPageState2 extends State<PlayerPage2> {
   late BetterPlayerController _betterPlayerController = BetterPlayerController(
     const BetterPlayerConfiguration(),
   );
@@ -26,10 +26,11 @@ class _PlayerPageState extends State<PlayerPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
+        BetterPlayerDataSourceType.network, Get.arguments);
     _betterPlayerController = BetterPlayerController(
-      const BetterPlayerConfiguration(),
-    );
+        const BetterPlayerConfiguration(),
+        betterPlayerDataSource: betterPlayerDataSource);
     setState(() {
       _betterPlayerController.play();
     });
@@ -73,8 +74,7 @@ class _PlayerPageState extends State<PlayerPage> {
                 Expanded(
                   child: Consumer(
                     builder: (context, ref, child) {
-                      final listProvider =
-                          ref.watch(channelCatgoryListProvider(Get.arguments));
+                      final listProvider = ref.watch(channelListProvider);
                       return listProvider.when(
                           error: (str, error) => Text('Not Found'),
                           loading: () =>
@@ -127,8 +127,6 @@ class _PlayerPageState extends State<PlayerPage> {
                                             ],
                                           ),
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
                                             children: [
                                               Expanded(
                                                   child: list[index]['logo']

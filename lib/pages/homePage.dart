@@ -5,8 +5,11 @@ import 'package:d_input/d_input.dart';
 import 'package:d_view/d_view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:setup_config_wizard/RouteManage/routesall.dart';
 import 'package:sn_progress_dialog/options/completed.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import '../main.dart';
@@ -71,26 +74,28 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.offNamed(Routes.buildPage);
+                        },
                         child: _makeBox("Build", "assets/home/build.png"),
                       ),
                       InkWell(
                         onTap: () {
                           _download();
                         },
-                        child: _makeBox("Download", "assets/home/build.png"),
+                        child: _makeBox("Download", "assets/home/download.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Addons", "assets/home/build.png"),
+                        child: _makeBox("Addons", "assets/home/addons.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Open Kodi", "assets/home/build.png"),
+                        child: _makeBox("Open Kodi", "assets/home/kd.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Boot Change", "assets/home/build.png"),
+                        child: _makeBox("Boot Change", "assets/home/boot.png"),
                       ),
                     ],
                   ),
@@ -100,26 +105,26 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Remote", "assets/home/build.png"),
+                        child: _makeBox("Remote", "assets/home/remote.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Setup Guide", "assets/home/build.png"),
+                        child: _makeBox("Setup Guide", "assets/home/guide.png"),
                       ),
                       InkWell(
                         onTap: () {},
                         child:
-                            _makeBox("Build Update", "assets/home/build.png"),
+                            _makeBox("Build Update", "assets/home/update.png"),
                       ),
                       InkWell(
                         onTap: () {
-                          _completedProgress(context,"Cleaning...");
+                          _completedProgress(context, "Cleaning...");
                         },
-                        child: _makeBox("Clean", "assets/home/build.png"),
+                        child: _makeBox("Clean", "assets/home/clean.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Boot Change", "assets/home/build.png"),
+                        child: _makeBox("Auto Boot", "assets/home/auto.png"),
                       ),
                     ],
                   ),
@@ -128,25 +133,26 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
-                        onTap: () {},
-                        child: _makeBox("Buffing Fix", "assets/home/build.png"),
+                        onTap: () {
+                          _completedProgress(context, "Buffer Fixing...");
+                        },
+                        child: _makeBox("Buffing Fix", "assets/home/buffer.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Auto Boot", "assets/home/build.png"),
+                        child: _makeBox("Switch Build", "assets/home/switch.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child:
-                            _makeBox("Switch Builds", "assets/home/build.png"),
+                        child: _makeBox("Bookmark", "assets/home/bookmark.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Force KD", "assets/home/build.png"),
+                        child: _makeBox("Force KD", "assets/home/force.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Backup KD", "assets/home/build.png"),
+                        child: _makeBox("Backup KD", "assets/home/backup.png"),
                       ),
                     ],
                   )
@@ -159,7 +165,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _completedProgress(context,mes) async {
+  _completedProgress(context, mes) async {
     ProgressDialog pd = ProgressDialog(context: context);
     pd.show(
       max: 100,
@@ -206,8 +212,13 @@ class _HomePageState extends State<HomePage> {
         height: 100,
         alignment: Alignment.center,
         child: Center(
-          child: Stack(alignment: AlignmentDirectional.bottomCenter, children: [
-            Image.asset(t),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Image.asset(
+              t,
+              height: 50,
+              width: 50,
+            ),
+            DView.spaceHeight(8),
             Text(
               name,
               style: TextStyle(

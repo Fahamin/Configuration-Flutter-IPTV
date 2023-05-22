@@ -11,6 +11,7 @@ import 'package:hive/hive.dart';
 import 'dart:convert' as convert;
 import 'package:m3u_parser_nullsafe/m3u_parser_nullsafe.dart';
 import 'package:http/http.dart' as http;
+import 'package:setup_config_wizard/RouteManage/routesall.dart';
 
 import '../../model/m3uModel.dart';
 import '../../DB/sqfliteHelper.dart';
@@ -63,15 +64,16 @@ Future<void> _createPlayList(String name, String link) async {
   for (var item in m3uList.items) {
     print('Title: ${item.title}');
   }*/
+
   var m3u;
   final response = await http.get(Uri.parse(link));
-  log('movieTitle: $response');
+
   m3u = await M3uList.load(response.body);
   for (var entry in m3u.items) {
-    log('movieTitle:${entry.title}');
     _addChannel(entry.title, entry.link, entry.attributes["tvg-logo"], name);
   }
   await SQLHelper.createPlayList(name);
+  Get.offNamed(Routes.player, arguments: name);
 }
 
 // Insert a new item to the database

@@ -31,7 +31,7 @@ class PlaylistPage extends StatelessWidget {
                     itemCount: list.length,
                     itemBuilder: (BuildContext con, int index) {
                       return ListTile(
-                        onTap: () {
+                        onTap: () async {
                           Get.toNamed(Routes.player,
                               arguments: list[index]['title']);
                         },
