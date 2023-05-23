@@ -1,24 +1,20 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:setup_config_wizard/model/buildModel.dart';
-import 'package:setup_config_wizard/pages/build/custom_listtile.dart';
 
-import '../../model/m3uModel.dart';
-import '../../navigation/nav_Drawer.dart';
+import '../model/buildModel.dart';
+import '../navigation/nav_Drawer.dart';
+import 'build/custom_listtile.dart';
 
-class BuildPage extends StatelessWidget {
-   BuildPage({Key? key}) : super(key: key);
-
-  final dataBaseRef = FirebaseDatabase.instance.ref("builds");
+class NexusAddons extends StatelessWidget {
+  NexusAddons({Key? key}) : super(key: key);
+  final dataBaseRef = FirebaseDatabase.instance.ref("matrix");
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("Build List"),
+        title: Text("Nexus Addons"),
         centerTitle: true,
       ),
       drawer: NavDrawer(),

@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:d_input/d_input.dart';
 import 'package:d_view/d_view.dart';
 import 'package:dio/dio.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,6 +17,8 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 import '../main.dart';
 import '../navigation/nav_Drawer.dart';
 import 'package:http/http.dart' as http;
+
+import '../utils/utils_file.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,8 +42,14 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  var height;
+  var width;
+
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       drawer: const NavDrawer(),
       appBar: AppBar(
@@ -66,11 +76,11 @@ class _HomePageState extends State<HomePage> {
           child: Center(
             child: Expanded(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
@@ -86,35 +96,27 @@ class _HomePageState extends State<HomePage> {
                         child: _makeBox("Download", "assets/home/download.png"),
                       ),
                       InkWell(
-                        onTap: () {},
-                        child: _makeBox("Addons", "assets/home/addons.png"),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: _makeBox("Open Kodi", "assets/home/kd.png"),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: _makeBox("Boot Change", "assets/home/boot.png"),
+                        onTap: () {
+                          Get.offNamed(Routes.nexusAddons);
+                        },
+                        child:
+                            _makeBox("Nexus Addons", "assets/home/addons.png"),
                       ),
                     ],
                   ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.offNamed(Routes.iptv);
+                        },
                         child: _makeBox("Remote", "assets/home/remote.png"),
                       ),
                       InkWell(
                         onTap: () {},
-                        child: _makeBox("Setup Guide", "assets/home/guide.png"),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child:
-                            _makeBox("Build Update", "assets/home/update.png"),
+                        child: _makeBox("Setup", "assets/home/guide.png"),
                       ),
                       InkWell(
                         onTap: () {
@@ -122,37 +124,33 @@ class _HomePageState extends State<HomePage> {
                         },
                         child: _makeBox("Clean", "assets/home/clean.png"),
                       ),
-                      InkWell(
-                        onTap: () {},
-                        child: _makeBox("Auto Boot", "assets/home/auto.png"),
-                      ),
                     ],
                   ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
                         onTap: () {
                           _completedProgress(context, "Buffer Fixing...");
                         },
-                        child: _makeBox("Buffing Fix", "assets/home/buffer.png"),
+                        child:
+                            _makeBox("Buffing Fix", "assets/home/buffer.png"),
                       ),
                       InkWell(
-                        onTap: () {},
-                        child: _makeBox("Switch Build", "assets/home/switch.png"),
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => const Utils());
+                        },
+                        child:
+                            _makeBox("Switch Build", "assets/home/switch.png"),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+
+                        },
                         child: _makeBox("Bookmark", "assets/home/bookmark.png"),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: _makeBox("Force KD", "assets/home/force.png"),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: _makeBox("Backup KD", "assets/home/backup.png"),
                       ),
                     ],
                   )
@@ -181,18 +179,6 @@ class _HomePageState extends State<HomePage> {
       await Future.delayed(Duration(milliseconds: 100));
     }
   }
-
-/*
-  _customDialog() {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(9),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: contentBox(context),
-    );
-  }*/
 
   _makeBox(String name, String t) {
     return Container(

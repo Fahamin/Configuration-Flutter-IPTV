@@ -6,7 +6,7 @@ import '../navigation/nav_Drawer.dart';
 import 'channel_page.dart';
 import 'm3u/m3u_Page.dart';
 
-const List _page = [
+ List _page = [
   M3uPage(),
   PlaylistPage(),
   ChannelPage(),

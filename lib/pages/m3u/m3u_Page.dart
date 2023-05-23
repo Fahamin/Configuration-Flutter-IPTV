@@ -17,14 +17,9 @@ import '../../model/m3uModel.dart';
 import '../../DB/sqfliteHelper.dart';
 import '../../navigation/nav_Drawer.dart';
 
-class M3uPage extends StatefulWidget {
-  const M3uPage({Key? key}) : super(key: key);
+class M3uPage extends StatelessWidget {
+  M3uPage({Key? key}) : super(key: key);
 
-  @override
-  State<M3uPage> createState() => _M3uPageState();
-}
-
-class _M3uPageState extends State<M3uPage> {
   final dataBaseRef = FirebaseDatabase.instance.ref("mm");
 
   @override
@@ -47,8 +42,9 @@ class _M3uPageState extends State<M3uPage> {
             );
           } else {
             return ListTile(
-              onTap: () =>
-                  _createPlayList(model.name.toString(), model.link.toString()),
+              onTap: () async {
+                _createPlayList(model.name.toString(), model.link.toString());
+              },
               leading: Icon(Icons.tv),
               title: Text(model.name.toString()),
             );
@@ -65,15 +61,18 @@ Future<void> _createPlayList(String name, String link) async {
     print('Title: ${item.title}');
   }*/
 
-  var m3u;
-  final response = await http.get(Uri.parse(link));
+  var data = await SQLHelper.checkPlayList(name);
 
-  m3u = await M3uList.load(response.body);
-  for (var entry in m3u.items) {
-    _addChannel(entry.title, entry.link, entry.attributes["tvg-logo"], name);
+  if (data.isEmpty) {
+    await SQLHelper.createPlayList(name);
+    var m3u;
+    final response = await http.get(Uri.parse(link));
+    m3u = await M3uList.load(response.body);
+    for (var entry in m3u.items) {
+      _addChannel(entry.title, entry.link, entry.attributes["tvg-logo"], name);
+    }
   }
-  await SQLHelper.createPlayList(name);
-  Get.offNamed(Routes.player, arguments: name);
+  Get.toNamed(Routes.player, arguments: name);
 }
 
 // Insert a new item to the database

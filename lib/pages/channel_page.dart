@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:setup_config_wizard/DB/sqfliteHelper.dart';
 import 'package:setup_config_wizard/ProviderHandaler/ProviderHandle.dart';
 import 'package:setup_config_wizard/RouteManage/routesall.dart';
 
 import '../navigation/nav_Drawer.dart';
 
 class ChannelPage extends StatelessWidget {
-  const ChannelPage({Key? key}) : super(key: key);
+  ChannelPage({Key? key}) : super(key: key);
+  var isFav;
 
   @override
   Widget build(BuildContext context) {
@@ -39,50 +41,70 @@ class ChannelPage extends StatelessWidget {
                           child: InkWell(
                             onTap: () => Get.toNamed(Routes.player2,
                                 arguments: list[index]['link']),
-                            child: Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 2,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
+                            child: Stack(
+                              alignment: AlignmentDirectional.topEnd,
+                              children: [
+                                Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 2,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Center(
+                                            child: list[index]['logo']
+                                                    .toString()
+                                                    .isNotEmpty
+                                                ? CachedNetworkImage(
+                                                    height: 40,
+                                                    width: 40,
+                                                    imageUrl: list[index]
+                                                        ['logo'],
+                                                    placeholder: (context,
+                                                            url) =>
+                                                        new Icon(
+                                                            Icons.tv_outlined),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        new Icon(
+                                                            Icons.tv_outlined),
+                                                  )
+                                                : const Icon(
+                                                    Icons.tv,
+                                                    color: Colors.blue,
+                                                  )),
+                                        Text(
+                                          list[index]["title"],
+                                          style: TextStyle(
+                                            color: Colors.blue[600],
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                IconButton(
+                                  onPressed: () {
+                                    isFav = SQLHelper.checkFavorite(
+                                        list[index]['title']);
+                                  },
+                                  icon: Icon(Icons.favorite_border),
                                 ),
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                        child: list[index]['logo']
-                                                .toString()
-                                                .isNotEmpty
-                                            ? CachedNetworkImage(
-                                                height: 50,
-                                                width: 50,
-                                                imageUrl: list[index]['logo'],
-                                                placeholder: (context, url) =>
-                                                    new Icon(Icons.tv_outlined),
-                                                errorWidget: (context, url,
-                                                        error) =>
-                                                    new Icon(Icons.tv_outlined),
-                                              )
-                                            : const Icon(
-                                                Icons.tv,
-                                                color: Colors.blue,
-                                              )),
-                                    Text(
-                                      list[index]["title"],
-                                      style: TextStyle(
-                                        color: Colors.blue[600],
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                )),
+                              ],
+                            ),
                           ),
                         );
                       });

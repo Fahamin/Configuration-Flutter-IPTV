@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:setup_config_wizard/pages/build/build_page.dart';
 import 'package:setup_config_wizard/pages/iptv_page.dart';
+import 'package:setup_config_wizard/pages/nexus_addons.dart';
 import 'package:setup_config_wizard/pages/player_page.dart';
 
 import '../pages/homePage.dart';
@@ -24,7 +25,7 @@ class Routes {
   static String player = '/player';
   static String player2 = '/player2';
 
-  static String detailsPage = '/detailsPage';
+  static String nexusAddons = '/nexusAddons';
 
   static String productPage = '/productPage';
 }
@@ -70,6 +71,13 @@ appRoutes() => [
       GetPage(
         name: Routes.player2,
         page: () => PlayerPage2(),
+        transition: Transition.leftToRightWithFade,
+        transitionDuration: Duration(milliseconds: 500),
+      ),
+
+      GetPage(
+        name: Routes.nexusAddons,
+        page: () => NexusAddons(),
         transition: Transition.leftToRightWithFade,
         transitionDuration: Duration(milliseconds: 500),
       ),

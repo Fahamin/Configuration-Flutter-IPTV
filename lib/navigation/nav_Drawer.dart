@@ -114,7 +114,6 @@ class NavDrawer extends StatelessWidget {
                   Get.off("");
                 },
               ),
-
               ListTile(
                 title: Text("Contact"),
                 leading: IconButton(

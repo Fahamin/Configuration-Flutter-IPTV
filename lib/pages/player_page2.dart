@@ -127,8 +127,12 @@ class _PlayerPageState2 extends State<PlayerPage2> {
                                             ],
                                           ),
                                           child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
-                                              Expanded(
+                                              Center(
                                                   child: list[index]['logo']
                                                           .toString()
                                                           .isNotEmpty

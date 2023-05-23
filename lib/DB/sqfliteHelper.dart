@@ -18,9 +18,28 @@ class SQLHelper {
   static final COLT_1 = "id";
   static final COLT_2 = "title";
 
+  static final TABLE_Fav = "fav";
+
   static Future<void> createTables(sql.Database database) async {
     String CREATE_TABLE_QUERY = "CREATE TABLE " +
         TABLE_NAME +
+        "(" +
+        COL_1 +
+        " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+        COL_2 +
+        " TEXT," +
+        COL_3 +
+        " TEXT," +
+        COL_4 +
+        " TEXT," +
+        COL_5 +
+        " TEXT," +
+        COL_6 +
+        " TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP" +
+        ")";
+
+    String CREATE_TABLE_FAV = "CREATE TABLE " +
+        TABLE_Fav +
         "(" +
         COL_1 +
         " INTEGER PRIMARY KEY AUTOINCREMENT ," +
@@ -47,6 +66,7 @@ class SQLHelper {
 
     await database.execute(CREATE_TABLE_QUERY);
     await database.execute(CREATE_TABLE2_QUERY);
+    await database.execute(CREATE_TABLE_FAV);
 
     /* await database.execute("""CREATE TABLE items(
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -83,6 +103,33 @@ class SQLHelper {
     return id;
   }
 
+  static Future<int> AddChannelFAV(
+      String title, String link, String? logo, String cat) async {
+    final db = await SQLHelper.db();
+    final data = {COL_2: title, COL_3: link, COL_4: logo, COL_5: cat};
+    final id = await db.insert(TABLE_Fav, data);
+    return id;
+  }
+
+  static Future<List<Map<String, dynamic>>> getAllChannelFAV() async {
+    final db = await SQLHelper.db();
+    return db.query(TABLE_Fav, orderBy: "id");
+  }
+
+  static Future<void> deleteChannelFAV(String title) async {
+    final db = await SQLHelper.db();
+    try {
+      await db.delete(TABLE_Fav, where: "title = ?", whereArgs: [title]);
+    } catch (err) {
+      print("Something went wrong when deleting an item: $err");
+    }
+  }
+
+  static Future<List<Map<String, dynamic>>> checkFavorite(String id) async {
+    final db = await SQLHelper.db();
+    return db.query(TABLE_Fav, where: "title = ?", whereArgs: [id], limit: 1);
+  }
+
   // Read all items (journals)
   static Future<List<Map<String, dynamic>>> getAllChannel() async {
     final db = await SQLHelper.db();
@@ -115,7 +162,7 @@ class SQLHelper {
     };
 
     final result =
-    await db.update(TABLE_NAME, data, where: "id = ?", whereArgs: [id]);
+        await db.update(TABLE_NAME, data, where: "id = ?", whereArgs: [id]);
     return result;
   }
 
@@ -133,8 +180,7 @@ class SQLHelper {
   static Future<int> createPlayList(String title) async {
     final db = await SQLHelper.db();
     final data = {COLT_2: title};
-    final id = await db.insert(TABLE2, data,
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
+    final id = await db.insert(TABLE2, data);
     return id;
   }
 
