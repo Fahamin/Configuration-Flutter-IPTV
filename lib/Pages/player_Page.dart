@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import '../DB/sqfliteHelper.dart';
-import '../ProviderHandaler/ProviderHandle.dart';
-import '../navigation/nav_Drawer.dart';
+import '../Reverpod_Provider/provider_Handle.dart';
+import '../navigation/drawer_Menu.dart';
 
 class PlayerPage extends StatefulWidget {
   PlayerPage({Key? key}) : super(key: key);
@@ -74,7 +73,7 @@ class _PlayerPageState extends State<PlayerPage> {
                   child: Consumer(
                     builder: (context, ref, child) {
                       final listProvider =
-                          ref.watch(channelCatgoryListProvider(Get.arguments));
+                          ref.watch(channelCategoryListProvider(Get.arguments));
                       return listProvider.when(
                           error: (str, error) => Text('Not Found'),
                           loading: () =>

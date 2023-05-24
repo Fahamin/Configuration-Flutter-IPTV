@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
-import 'RouteManage/routesall.dart';
+import 'Controller/all_controller_binding.dart';
+import 'Route_Manage/routes_Manage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, __) {
           return GetMaterialApp(
+              initialBinding: AllControllerBinding(),
               // Remove the debug banner
               debugShowCheckedModeBanner: false,
               title: 'IPTV',

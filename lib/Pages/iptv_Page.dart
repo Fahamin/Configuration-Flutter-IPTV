@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:setup_config_wizard/pages/playlist/playlistpage.dart';
+import 'package:setup_config_wizard/Pages/playlist_Page.dart';
 
-import '../navigation/botom_menu.dart';
-import '../navigation/nav_Drawer.dart';
-import 'channel_page.dart';
-import 'm3u/m3u_Page.dart';
+import '../navigation/botom_Menu.dart';
+import '../navigation/drawer_Menu.dart';
+import 'channel_Page.dart';
+import 'm3u_Page.dart';
 
  List _page = [
   M3uPage(),

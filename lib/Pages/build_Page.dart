@@ -2,11 +2,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:setup_config_wizard/model/buildModel.dart';
-import 'package:setup_config_wizard/pages/build/custom_listtile.dart';
+import 'package:setup_config_wizard/model/build_Model.dart';
 
-import '../../model/m3uModel.dart';
-import '../../navigation/nav_Drawer.dart';
+import '../model/m3u_Model.dart';
+import '../navigation/drawer_Menu.dart';
+import '../utils/custom_Listtile.dart';
 
 class BuildPage extends StatelessWidget {
    BuildPage({Key? key}) : super(key: key);

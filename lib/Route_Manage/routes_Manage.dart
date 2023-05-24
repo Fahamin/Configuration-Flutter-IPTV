@@ -1,13 +1,15 @@
 import 'package:get/get.dart';
-import 'package:setup_config_wizard/pages/build/build_page.dart';
-import 'package:setup_config_wizard/pages/iptv_page.dart';
-import 'package:setup_config_wizard/pages/nexus_addons.dart';
-import 'package:setup_config_wizard/pages/player_page.dart';
 
-import '../pages/homePage.dart';
-import '../pages/m3u/m3u_Page.dart';
-import '../pages/player_page2.dart';
-import '../pages/playlist/playlistpage.dart';
+import '../Pages/build_Page.dart';
+import '../Pages/home_Page.dart';
+import '../Pages/iptv_Page.dart';
+import '../Pages/m3u_Page.dart';
+import '../Pages/nexus_Addons.dart';
+import '../Pages/player_Page.dart';
+import '../Pages/player_Page2.dart';
+import '../Pages/playlist_Page.dart';
+
+
 
 class Routes {
   static String homePage = '/homepage';
@@ -23,6 +25,7 @@ class Routes {
   static String iptv = '/iptv';
 
   static String player = '/player';
+
   static String player2 = '/player2';
 
   static String nexusAddons = '/nexusAddons';

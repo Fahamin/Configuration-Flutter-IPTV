@@ -2,19 +2,20 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class SQLHelper {
-  static final DATABASE_NAME = "tvdb";
-  static final VERSTION = 2;
-  static final TABLE_NAME = "citems";
+  static final DATABASE_NAME = "databaseTV";
+  static final VERSTION = 1;
+  static final CHANNEL_TABLE = "channelTable";
 
-  static final COL_1 = "id";
-  static final COL_2 = "title";
-  static final COL_3 = "link";
-  static final COL_4 = "logo";
-  static final COL_5 = "cat";
-  static final COL_6 = "createdAt";
+  static final ID = "id";
+  static final TITLE = "title";
+  static final LINK = "link";
+  static final LOGO = "logo";
+  static final CAT = "cat";
+  static final CTIME = "createdAt";
+  static final FAV = "fav";
 
   //FOR TWO
-  static final TABLE2 = "PLAYlist";
+  static final PLAYLIST_TABLE = "playListTable";
   static final COLT_1 = "id";
   static final COLT_2 = "title";
 
@@ -22,41 +23,43 @@ class SQLHelper {
 
   static Future<void> createTables(sql.Database database) async {
     String CREATE_TABLE_QUERY = "CREATE TABLE " +
-        TABLE_NAME +
+        CHANNEL_TABLE +
         "(" +
-        COL_1 +
+        ID +
         " INTEGER PRIMARY KEY AUTOINCREMENT ," +
-        COL_2 +
+        TITLE +
         " TEXT," +
-        COL_3 +
+        LINK +
         " TEXT," +
-        COL_4 +
+        LOGO +
         " TEXT," +
-        COL_5 +
+        CAT +
         " TEXT," +
-        COL_6 +
-        " TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP" +
+        CTIME +
+        " TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
+        FAV +
+        " INTEGER" +
         ")";
 
     String CREATE_TABLE_FAV = "CREATE TABLE " +
         TABLE_Fav +
         "(" +
-        COL_1 +
+        ID +
         " INTEGER PRIMARY KEY AUTOINCREMENT ," +
-        COL_2 +
+        TITLE +
         " TEXT," +
-        COL_3 +
+        LINK +
         " TEXT," +
-        COL_4 +
+        LOGO +
         " TEXT," +
-        COL_5 +
+        CAT +
         " TEXT," +
-        COL_6 +
+        CTIME +
         " TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP" +
         ")";
 
     String CREATE_TABLE2_QUERY = "CREATE TABLE " +
-        TABLE2 +
+        PLAYLIST_TABLE +
         "(" +
         COLT_1 +
         " INTEGER PRIMARY KEY AUTOINCREMENT ," +
@@ -94,11 +97,17 @@ class SQLHelper {
 
   // Create new item (journal)
   static Future<int> AddChannel(
-      String title, String link, String? logo, String cat) async {
+      String title, String link, String? logo, String cat, int fav) async {
     final db = await SQLHelper.db();
 
-    final data = {COL_2: title, COL_3: link, COL_4: logo, COL_5: cat};
-    final id = await db.insert(TABLE_NAME, data,
+    final data = {
+      TITLE: title,
+      LINK: link,
+      LOGO: logo,
+      CAT: cat,
+      FAV: fav
+    };
+    final id = await db.insert(CHANNEL_TABLE, data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
   }
@@ -106,7 +115,7 @@ class SQLHelper {
   static Future<int> AddChannelFAV(
       String title, String link, String? logo, String cat) async {
     final db = await SQLHelper.db();
-    final data = {COL_2: title, COL_3: link, COL_4: logo, COL_5: cat};
+    final data = {TITLE: title, LINK: link, LOGO: logo, CAT: cat};
     final id = await db.insert(TABLE_Fav, data);
     return id;
   }
@@ -133,36 +142,38 @@ class SQLHelper {
   // Read all items (journals)
   static Future<List<Map<String, dynamic>>> getAllChannel() async {
     final db = await SQLHelper.db();
-    return db.query(TABLE_NAME, orderBy: "id");
+    return db.query(CHANNEL_TABLE, orderBy: "id");
   }
 
   // Read a single item by id
   // The app doesn't use this method but I put here in case you want to see it
   static Future<List<Map<String, dynamic>>> getItemByID(int id) async {
     final db = await SQLHelper.db();
-    return db.query(TABLE_NAME, where: "id = ?", whereArgs: [id], limit: 1);
+    return db.query(CHANNEL_TABLE, where: "id = ?", whereArgs: [id], limit: 1);
   }
 
   static Future<List<Map<String, dynamic>>> getChannelByCategory(
       String cat) async {
     final db = await SQLHelper.db();
-    return db.query(TABLE_NAME, where: "cat = ?", whereArgs: [cat]);
+    return db.query(CHANNEL_TABLE, where: "cat = ?", whereArgs: [cat]);
   }
 
   // Update an item by id
   static Future<int> updateItem(
-      int id, String title, String? descrption, String cat) async {
+      int id, String title, String link,String logo,String cat, int fav) async {
     final db = await SQLHelper.db();
 
     final data = {
-      COL_2: title,
-      COL_3: descrption,
-      COL_5: cat,
-      COL_6: DateTime.now().toString()
+      TITLE: title,
+      LINK: link,
+      LOGO:logo,
+      CAT: cat,
+      CTIME: DateTime.now().toString(),
+      FAV: fav
     };
 
     final result =
-        await db.update(TABLE_NAME, data, where: "id = ?", whereArgs: [id]);
+        await db.update(CHANNEL_TABLE, data, where: "id = ?", whereArgs: [id]);
     return result;
   }
 
@@ -170,7 +181,7 @@ class SQLHelper {
   static Future<void> deleteItem(int id) async {
     final db = await SQLHelper.db();
     try {
-      await db.delete(TABLE_NAME, where: "id = ?", whereArgs: [id]);
+      await db.delete(CHANNEL_TABLE, where: "id = ?", whereArgs: [id]);
     } catch (err) {
       print("Something went wrong when deleting an item: $err");
     }
@@ -180,18 +191,18 @@ class SQLHelper {
   static Future<int> createPlayList(String title) async {
     final db = await SQLHelper.db();
     final data = {COLT_2: title};
-    final id = await db.insert(TABLE2, data);
+    final id = await db.insert(PLAYLIST_TABLE, data);
     return id;
   }
 
   // Read all items (journals)
   static Future<List<Map<String, dynamic>>> getAllPlayList() async {
     final db = await SQLHelper.db();
-    return db.query(TABLE2, orderBy: "id");
+    return db.query(PLAYLIST_TABLE, orderBy: "id");
   }
 
   static Future<List<Map<String, dynamic>>> checkPlayList(String id) async {
     final db = await SQLHelper.db();
-    return db.query(TABLE2, where: "title = ?", whereArgs: [id]);
+    return db.query(PLAYLIST_TABLE, where: "title = ?", whereArgs: [id]);
   }
 }

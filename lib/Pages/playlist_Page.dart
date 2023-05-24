@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:setup_config_wizard/ProviderHandaler/ProviderHandle.dart';
 
-import '../../DB/sqfliteHelper.dart';
-import '../../RouteManage/routesall.dart';
-import '../../navigation/nav_Drawer.dart';
+import '../DB/database_Helper.dart';
+import '../Reverpod_Provider/provider_Handle.dart';
+import '../Route_Manage/routes_Manage.dart';
+import '../navigation/drawer_Menu.dart';
 
 class PlaylistPage extends StatelessWidget {
   const PlaylistPage({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class PlaylistPage extends StatelessWidget {
       drawer: NavDrawer(),
       body: Center(
         child: Consumer(builder: (context, ref, child) {
-          final playlistPro = ref.watch(playListProvidr);
+          final playlistPro = ref.watch(playListProvider);
           return playlistPro.when(
               error: (error, str) => Text("Not Found"),
               loading: () => Center(child: CircularProgressIndicator()),

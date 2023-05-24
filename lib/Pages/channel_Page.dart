@@ -4,15 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:setup_config_wizard/DB/sqfliteHelper.dart';
-import 'package:setup_config_wizard/ProviderHandaler/ProviderHandle.dart';
-import 'package:setup_config_wizard/RouteManage/routesall.dart';
+import 'package:setup_config_wizard/DB/database_Helper.dart';
 
-import '../navigation/nav_Drawer.dart';
+import '../Reverpod_Provider/provider_Handle.dart';
+import '../Route_Manage/routes_Manage.dart';
+import '../navigation/drawer_Menu.dart';
 
-class ChannelPage extends StatelessWidget {
+class ChannelPage extends StatefulWidget {
   ChannelPage({Key? key}) : super(key: key);
-  var isFav;
+
+  @override
+  State<ChannelPage> createState() => _ChannelPageState();
+}
+
+class _ChannelPageState extends State<ChannelPage> {
+  Color _iconColor = Colors.black;
+  late int isSave;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +43,7 @@ class ChannelPage extends StatelessWidget {
                           mainAxisSpacing: 5),
                       itemCount: list.length,
                       itemBuilder: (BuildContext ctx, index) {
+                        isSave = list[index]['fav'];
                         return Padding(
                           padding: const EdgeInsets.all(18.0),
                           child: InkWell(
@@ -97,11 +105,41 @@ class ChannelPage extends StatelessWidget {
                                       ],
                                     )),
                                 IconButton(
-                                  onPressed: () {
-                                    isFav = SQLHelper.checkFavorite(
-                                        list[index]['title']);
+                                  icon: isSave == 1
+                                      ? Icon(
+                                          Icons.favorite,
+                                          color: _iconColor,
+                                        )
+                                      : Icon(
+                                          Icons.favorite_border,
+                                          color: _iconColor,
+                                        ),
+                                  onPressed: () async {
+                                    setState(() async {
+                                      if (list[index]['fav'] == 1) {
+                                        isSave = 0;
+                                        await SQLHelper.updateItem(
+                                            list[index]['id'],
+                                            list[index]['title'],
+                                            list[index]['link'],
+                                            list[index]['logo'],
+                                            list[index]['cat'],
+                                            0);
+                                      } else {
+                                        isSave = 1;
+                                        await SQLHelper.updateItem(
+                                            list[index]['id'],
+                                            list[index]['title'],
+                                            list[index]['link'],
+                                            list[index]['logo'],
+                                            list[index]['cat'],
+                                            1);
+                                      }
+                                    });
+
+                                    debugPrint("fahim" +
+                                        list[index]['fav'].toString());
                                   },
-                                  icon: Icon(Icons.favorite_border),
                                 ),
                               ],
                             ),

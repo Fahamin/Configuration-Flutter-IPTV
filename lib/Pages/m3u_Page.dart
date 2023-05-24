@@ -11,11 +11,11 @@ import 'package:hive/hive.dart';
 import 'dart:convert' as convert;
 import 'package:m3u_parser_nullsafe/m3u_parser_nullsafe.dart';
 import 'package:http/http.dart' as http;
-import 'package:setup_config_wizard/RouteManage/routesall.dart';
 
-import '../../model/m3uModel.dart';
-import '../../DB/sqfliteHelper.dart';
-import '../../navigation/nav_Drawer.dart';
+import '../Route_Manage/routes_Manage.dart';
+import '../model/m3u_Model.dart';
+import '../DB/database_Helper.dart';
+import '../navigation/drawer_Menu.dart';
 
 class M3uPage extends StatelessWidget {
   M3uPage({Key? key}) : super(key: key);
@@ -69,7 +69,7 @@ Future<void> _createPlayList(String name, String link) async {
     final response = await http.get(Uri.parse(link));
     m3u = await M3uList.load(response.body);
     for (var entry in m3u.items) {
-      _addChannel(entry.title, entry.link, entry.attributes["tvg-logo"], name);
+      _addChannel(entry.title, entry.link, entry.attributes["tvg-logo"], name,0);
     }
   }
   Get.toNamed(Routes.player, arguments: name);
@@ -77,6 +77,6 @@ Future<void> _createPlayList(String name, String link) async {
 
 // Insert a new item to the database
 Future<void> _addChannel(
-    String _title, String _link, String? _logo, String cat) async {
-  await SQLHelper.AddChannel(_title, _link, _logo, cat);
+    String _title, String _link, String? _logo, String cat,int fav) async {
+  await SQLHelper.AddChannel(_title, _link, _logo, cat,fav);
 }

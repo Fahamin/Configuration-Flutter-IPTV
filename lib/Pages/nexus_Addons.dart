@@ -2,9 +2,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
-import '../model/buildModel.dart';
-import '../navigation/nav_Drawer.dart';
-import 'build/custom_listtile.dart';
+import '../model/build_Model.dart';
+import '../navigation/drawer_Menu.dart';
+import '../utils/custom_Listtile.dart';
 
 class NexusAddons extends StatelessWidget {
   NexusAddons({Key? key}) : super(key: key);

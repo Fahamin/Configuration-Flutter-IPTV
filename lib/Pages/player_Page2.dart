@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import '../DB/sqfliteHelper.dart';
-import '../ProviderHandaler/ProviderHandle.dart';
-import '../navigation/nav_Drawer.dart';
+import '../DB/database_Helper.dart';
+import '../Reverpod_Provider/provider_Handle.dart';
+import '../navigation/drawer_Menu.dart';
 
 class PlayerPage2 extends StatefulWidget {
   PlayerPage2({Key? key}) : super(key: key);

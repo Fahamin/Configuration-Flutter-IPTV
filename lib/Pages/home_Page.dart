@@ -11,14 +11,14 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:setup_config_wizard/RouteManage/routesall.dart';
 import 'package:sn_progress_dialog/options/completed.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+import '../Route_Manage/routes_Manage.dart';
 import '../main.dart';
-import '../navigation/nav_Drawer.dart';
+import '../navigation/drawer_Menu.dart';
 import 'package:http/http.dart' as http;
 
-import '../utils/utils_file.dart';
+import '../utils/utils_File.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
