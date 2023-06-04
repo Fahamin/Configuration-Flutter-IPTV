@@ -16,7 +16,7 @@ class FavoritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ALL Channel"),
+        title: Text("Favorite Channel"),
         centerTitle: true,
       ),
       drawer: NavDrawer(),
