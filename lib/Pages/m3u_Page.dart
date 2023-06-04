@@ -69,7 +69,8 @@ Future<void> _createPlayList(String name, String link) async {
     final response = await http.get(Uri.parse(link));
     m3u = await M3uList.load(response.body);
     for (var entry in m3u.items) {
-      _addChannel(entry.title, entry.link, entry.attributes["tvg-logo"], name,0);
+      _addChannel(
+          entry.title, entry.link, entry.attributes["tvg-logo"], name, "0");
     }
   }
   Get.toNamed(Routes.player, arguments: name);
@@ -77,6 +78,6 @@ Future<void> _createPlayList(String name, String link) async {
 
 // Insert a new item to the database
 Future<void> _addChannel(
-    String _title, String _link, String? _logo, String cat,int fav) async {
-  await SQLHelper.AddChannel(_title, _link, _logo, cat,fav);
+    String _title, String _link, String? _logo, String cat, String fav) async {
+  await SQLHelper.AddChannel(_title, _link, _logo, cat, fav);
 }

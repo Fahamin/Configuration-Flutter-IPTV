@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:setup_config_wizard/Pages/fav_page.dart';
 
 import '../Pages/build_Page.dart';
 import '../Pages/home_Page.dart';
@@ -8,8 +9,6 @@ import '../Pages/nexus_Addons.dart';
 import '../Pages/player_Page.dart';
 import '../Pages/player_Page2.dart';
 import '../Pages/playlist_Page.dart';
-
-
 
 class Routes {
   static String homePage = '/homepage';
@@ -31,6 +30,8 @@ class Routes {
   static String nexusAddons = '/nexusAddons';
 
   static String productPage = '/productPage';
+
+  static String favPage = '/favPage';
 }
 
 appRoutes() => [
@@ -81,6 +82,13 @@ appRoutes() => [
       GetPage(
         name: Routes.nexusAddons,
         page: () => NexusAddons(),
+        transition: Transition.leftToRightWithFade,
+        transitionDuration: Duration(milliseconds: 500),
+      ),
+
+      GetPage(
+        name: Routes.favPage,
+        page: () => FavoritePage(),
         transition: Transition.leftToRightWithFade,
         transitionDuration: Duration(milliseconds: 500),
       ),

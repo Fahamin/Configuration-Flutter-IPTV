@@ -4,22 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:setup_config_wizard/DB/database_Helper.dart';
 
+import '../Navigation/drawer_Menu.dart';
 import '../Reverpod_Provider/provider_Handle.dart';
 import '../Route_Manage/routes_Manage.dart';
-import '../navigation/drawer_Menu.dart';
 
-class ChannelPage extends StatefulWidget {
-  ChannelPage({Key? key}) : super(key: key);
-
-  @override
-  State<ChannelPage> createState() => _ChannelPageState();
-}
-
-class _ChannelPageState extends State<ChannelPage> {
-  Color _iconColor = Colors.black;
-  late int isSave;
+class FavoritePage extends StatelessWidget {
+  const FavoritePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +23,7 @@ class _ChannelPageState extends State<ChannelPage> {
       body: Center(
         child: Consumer(
           builder: (context, ref, chile) {
-            final channelList = ref.watch(channelListProvider);
+            final channelList = ref.watch(favListProvider("1"));
             return channelList.when(
                 data: (list) {
                   return GridView.builder(
@@ -43,7 +34,6 @@ class _ChannelPageState extends State<ChannelPage> {
                           mainAxisSpacing: 5),
                       itemCount: list.length,
                       itemBuilder: (BuildContext ctx, index) {
-                        isSave = list[index]['fav'];
                         return Padding(
                           padding: const EdgeInsets.all(18.0),
                           child: InkWell(
@@ -104,42 +94,6 @@ class _ChannelPageState extends State<ChannelPage> {
                                         ),
                                       ],
                                     )),
-                                IconButton(
-                                  icon: isSave == 1
-                                      ? Icon(
-                                          Icons.favorite,
-                                          color: _iconColor,
-                                        )
-                                      : Icon(
-                                          Icons.favorite_border,
-                                          color: _iconColor,
-                                        ),
-                                  onPressed: () {
-                                    setState(() async {
-                                      if (list[index]['fav'] == "1") {
-                                        isSave = 0;
-                                        await SQLHelper.updateItem(
-                                            list[index]['id'],
-                                            list[index]['title'],
-                                            list[index]['link'],
-                                            list[index]['logo'],
-                                            list[index]['cat'],
-                                            "0");
-                                      } else {
-                                        isSave = 1;
-                                        await SQLHelper.updateItem(
-                                            list[index]['id'],
-                                            list[index]['title'],
-                                            list[index]['link'],
-                                            list[index]['logo'],
-                                            list[index]['cat'],
-                                            "1");
-                                      }
-                                    });
-                                    debugPrint("fahim" +
-                                        list[index]['fav'].toString());
-                                  },
-                                ),
                               ],
                             ),
                           ),

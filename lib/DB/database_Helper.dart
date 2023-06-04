@@ -97,16 +97,10 @@ class SQLHelper {
 
   // Create new item (journal)
   static Future<int> AddChannel(
-      String title, String link, String? logo, String cat, int fav) async {
+      String title, String link, String? logo, String cat, String fav) async {
     final db = await SQLHelper.db();
 
-    final data = {
-      TITLE: title,
-      LINK: link,
-      LOGO: logo,
-      CAT: cat,
-      FAV: fav
-    };
+    final data = {TITLE: title, LINK: link, LOGO: logo, CAT: cat, FAV: fav};
     final id = await db.insert(CHANNEL_TABLE, data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
@@ -158,15 +152,21 @@ class SQLHelper {
     return db.query(CHANNEL_TABLE, where: "cat = ?", whereArgs: [cat]);
   }
 
+  static Future<List<Map<String, dynamic>>> getChannelFavList(
+      String cat) async {
+    final db = await SQLHelper.db();
+    return db.query(CHANNEL_TABLE, where: "fav = ?", whereArgs: [cat]);
+  }
+
   // Update an item by id
-  static Future<int> updateItem(
-      int id, String title, String link,String logo,String cat, int fav) async {
+  static Future<int> updateItem(int id, String title, String link, String logo,
+      String cat, String fav) async {
     final db = await SQLHelper.db();
 
     final data = {
       TITLE: title,
       LINK: link,
-      LOGO:logo,
+      LOGO: logo,
       CAT: cat,
       CTIME: DateTime.now().toString(),
       FAV: fav

@@ -16,3 +16,8 @@ final channelCategoryListProvider =
     FutureProvider.family<List<Map<String, dynamic>>, String>((ref, cat) async {
   return await SQLHelper.getChannelByCategory(cat);
 });
+
+final favListProvider =
+    FutureProvider.family<List<Map<String, dynamic>>, String>((ref, fav) async {
+  return await SQLHelper.getChannelFavList(fav);
+});

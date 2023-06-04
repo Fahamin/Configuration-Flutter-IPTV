@@ -65,7 +65,6 @@ class NavDrawer extends StatelessWidget {
                   Get.offNamed(Routes.homePage);
                 },
               ),
-
               ListTile(
                 title: Text("Build DownLoad"),
                 leading: IconButton(
@@ -77,7 +76,6 @@ class NavDrawer extends StatelessWidget {
                   Get.offNamed(Routes.buildPage);
                 },
               ),
-
               ListTile(
                 title: Text("M3U"),
                 leading: IconButton(
@@ -89,7 +87,6 @@ class NavDrawer extends StatelessWidget {
                   Get.offNamed(Routes.m3uPage);
                 },
               ),
-
               ListTile(
                 title: Text("IPTV"),
                 leading: IconButton(
@@ -111,7 +108,8 @@ class NavDrawer extends StatelessWidget {
                   onPressed: () {},
                 ),
                 onTap: () {
-                  Get.off("");
+                  Get.back();
+                  Get.offNamed(Routes.favPage);
                 },
               ),
               ListTile(
