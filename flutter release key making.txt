@@ -1,0 +1,35 @@
+ 
+make keystore flutter: 
+ keytool -genkey -v -keystore D:\Fahamin\config_test_flutter\upk.jks -storetype
+ JKS -keyalg RSA -keysize 2048 -validity 10000 - alias key0
+
+
+Create a file named [project]/android/key.properties
+
+storePassword=fahamin00
+keyPassword=fahamin00
+keyAlias=key0
+storeFile=D:/Fahamin/config_test_flutter/android/app/upk.jks
+
+
+make jks file this code:
+
+keytool -genkey -v -keystore D:\Flutter Apps\setup_config_wizard\cdk.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias key0
+
+  keytool -genkey -v -keystore D:\Fahamin\setup_config_wizard\cdk.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias key8
+
+
+   signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+   }
+   buildTypes {
+       release {
+           signingConfig signingConfigs.release
+       }
+   }
+
