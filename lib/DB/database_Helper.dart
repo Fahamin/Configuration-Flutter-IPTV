@@ -12,12 +12,13 @@ class SQLHelper {
   static final LOGO = "logo";
   static final CAT = "cat";
   static final CTIME = "createdAt";
-  static final FAV = "fav";
+  static final FAV = "isFavorite";
 
   //FOR TWO
   static final PLAYLIST_TABLE = "playListTable";
   static final COLT_1 = "id";
   static final COLT_2 = "title";
+
 
   static final TABLE_Fav = "fav";
 
@@ -38,7 +39,7 @@ class SQLHelper {
         CTIME +
         " TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
         FAV +
-        " INTEGER" +
+        " BIT " +
         ")";
 
     String CREATE_TABLE_FAV = "CREATE TABLE " +
@@ -160,7 +161,7 @@ class SQLHelper {
 
   // Update an item by id
   static Future<int> updateItem(int id, String title, String link, String logo,
-      String cat, String fav) async {
+      String cat, bool fav) async {
     final db = await SQLHelper.db();
 
     final data = {

@@ -6,6 +6,7 @@ import 'package:d_view/d_view.dart';
 import 'package:dio/dio.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -13,6 +14,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sn_progress_dialog/options/completed.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+import '../Reverpod_Provider/provider_Handle.dart';
 import '../Route_Manage/routes_Manage.dart';
 import '../main.dart';
 import '../navigation/drawer_Menu.dart';
@@ -20,14 +22,14 @@ import 'package:http/http.dart' as http;
 
 import '../utils/utils_File.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   late String _localPath;
   late bool _permissionReady;
   late TargetPlatform? platform;
@@ -49,6 +51,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+    final isLightTheme = ref.watch(themeProvider);
 
     return Scaffold(
       drawer: const NavDrawer(),
@@ -59,14 +62,9 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: [
           IconButton(
-              icon: Icon(MyApp.themeNotifier.value == ThemeMode.light
-                  ? Icons.dark_mode
-                  : Icons.light_mode),
+              icon: Icon(isLightTheme ? Icons.light_mode : Icons.dark_mode),
               onPressed: () {
-                MyApp.themeNotifier.value =
-                    MyApp.themeNotifier.value == ThemeMode.light
-                        ? ThemeMode.dark
-                        : ThemeMode.light;
+                isLightTheme ? ref.read(themeProvider.notifier).state = false : ref.read(themeProvider.notifier).state = true;
               }),
         ],
       ),
@@ -147,9 +145,7 @@ class _HomePageState extends State<HomePage> {
                             _makeBox("Switch Build", "assets/home/switch.png"),
                       ),
                       InkWell(
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                         child: _makeBox("Bookmark", "assets/home/bookmark.png"),
                       ),
                     ],

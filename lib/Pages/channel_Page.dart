@@ -5,24 +5,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:setup_config_wizard/DB/database_Helper.dart';
-
 import '../Reverpod_Provider/provider_Handle.dart';
 import '../Route_Manage/routes_Manage.dart';
 import '../navigation/drawer_Menu.dart';
 
-class ChannelPage extends StatefulWidget {
+class ChannelPage extends ConsumerStatefulWidget {
   ChannelPage({Key? key}) : super(key: key);
 
   @override
-  State<ChannelPage> createState() => _ChannelPageState();
+  ConsumerState<ChannelPage> createState() => _ChannelPageState();
 }
 
-class _ChannelPageState extends State<ChannelPage> {
+class _ChannelPageState extends ConsumerState<ChannelPage> {
   Color _iconColor = Colors.black;
   late int isSave;
 
   @override
   Widget build(BuildContext context) {
+    final channelList = ref.watch(channelListProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("ALL Channel"),
@@ -30,10 +31,9 @@ class _ChannelPageState extends State<ChannelPage> {
       ),
       drawer: NavDrawer(),
       body: Center(
-        child: Consumer(
-          builder: (context, ref, chile) {
-            final channelList = ref.watch(channelListProvider);
-            return channelList.when(
+        child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: channelList.when(
                 data: (list) {
                   return GridView.builder(
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -43,7 +43,7 @@ class _ChannelPageState extends State<ChannelPage> {
                           mainAxisSpacing: 5),
                       itemCount: list.length,
                       itemBuilder: (BuildContext ctx, index) {
-                        isSave = list[index]['fav'];
+
                         return Padding(
                           padding: const EdgeInsets.all(18.0),
                           child: InkWell(
@@ -114,28 +114,31 @@ class _ChannelPageState extends State<ChannelPage> {
                                           Icons.favorite_border,
                                           color: _iconColor,
                                         ),
-                                  onPressed: () {
-                                    setState(() async {
-                                      if (list[index]['fav'] == "1") {
-                                        isSave = 0;
+                                  onPressed: () async {
+                                    isSave = list[index]['fav'];
+                                    debugPrint(isSave.toString());
+                                    if (list[index]['fav'] == "1") {
+                                      await SQLHelper.updateItem(
+                                          list[index]['id'],
+                                          list[index]['title'],
+                                          list[index]['link'],
+                                          list[index]['logo'],
+                                          list[index]['cat'],
+                                        false
+                                          );
+                                      setState(() {});
+                                    } else {
+
+                                      setState(() async {
                                         await SQLHelper.updateItem(
                                             list[index]['id'],
                                             list[index]['title'],
                                             list[index]['link'],
                                             list[index]['logo'],
                                             list[index]['cat'],
-                                            "0");
-                                      } else {
-                                        isSave = 1;
-                                        await SQLHelper.updateItem(
-                                            list[index]['id'],
-                                            list[index]['title'],
-                                            list[index]['link'],
-                                            list[index]['logo'],
-                                            list[index]['cat'],
-                                            "1");
-                                      }
-                                    });
+                                            true);
+                                      });
+                                    }
                                     debugPrint("fahim" +
                                         list[index]['fav'].toString());
                                   },
@@ -149,9 +152,7 @@ class _ChannelPageState extends State<ChannelPage> {
                 error: (error, str) => Text("Not Found"),
                 loading: () => Center(
                       child: CircularProgressIndicator(),
-                    ));
-          },
-        ),
+                    ))),
       ),
     );
   }
