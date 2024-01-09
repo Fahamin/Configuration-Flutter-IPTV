@@ -18,7 +18,7 @@ final channelListProvider = FutureProvider<List<ChannelModel>>((ref) async {
 });
 
 final channelCategoryListProvider =
-    FutureProvider.family<List<Map<String, dynamic>>, String>((ref, cat) async {
+    FutureProvider.family<List<ChannelModel>, String>((ref, cat) async {
   return await SQLHelper.getChannelByCategory(cat);
 });
 

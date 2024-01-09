@@ -217,14 +217,14 @@ class _PlayerPageState2 extends ConsumerState<PlayerPage2> {
                                                   model.link,
                                                   model.logo,
                                                   model.cat,
-                                                  false)
+                                                  0)
                                               : await SQLHelper.updateItem(
                                                   model.id,
                                                   model.title,
                                                   model.link,
                                                   model.logo,
                                                   model.cat,
-                                                  true);
+                                                  1);
 
                                           ref.refresh(channelListProvider);
                                         },

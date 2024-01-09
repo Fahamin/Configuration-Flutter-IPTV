@@ -99,18 +99,7 @@ class SQLHelper {
 
     return List<ChannelModel>.from(maps.map((map) => ChannelModel.fromMap(map)));
 
-    List.generate(maps.length, (i) {
-      channelList.add(ChannelModel(
-        maps[i]['id'],
-        maps[i]['title'],
-        maps[i]['link'],
-        maps[i]['logo'],
-        maps[i]['cat'],
-        maps[i]['createdAt'],
-        maps[i]['fav'],
-      ));
-    });
-    return channelList;
+
   }
 
   // Read a single item by id
@@ -120,10 +109,13 @@ class SQLHelper {
     return db.query(CHANNEL_TABLE, where: "id = ?", whereArgs: [id], limit: 1);
   }
 
-  static Future<List<Map<String, dynamic>>> getChannelByCategory(
+  static Future<List<ChannelModel>> getChannelByCategory(
       String cat) async {
     final db = await SQLHelper.db();
-    return db.query(CHANNEL_TABLE, where: "cat = ?", whereArgs: [cat]);
+    final List<Map<String, dynamic>> maps = await db.query(CHANNEL_TABLE, where: "cat = ?", whereArgs: [cat]);
+
+    return List<ChannelModel>.from(maps.map((map) => ChannelModel.fromMap(map)));
+
   }
 
   static Future<List<Map<String, dynamic>>> getChannelFavList(
@@ -134,7 +126,7 @@ class SQLHelper {
 
   // Update an item by id
   static Future<int> updateItem(int id, String title, String link, String logo,
-      String cat, bool fav) async {
+      String cat, int fav) async {
     final db = await SQLHelper.db();
 
     final data = {
