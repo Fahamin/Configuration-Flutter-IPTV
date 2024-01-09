@@ -1,19 +1,20 @@
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:setup_config_wizard/model/channel_Model.dart';
 import 'package:setup_config_wizard/model/m3u_Model.dart';
 
 import '../DB/database_Helper.dart';
 
 var themeProvider = StateProvider((ref) => true);
 
-var isFav = StateProvider((ref) => 0);
+final searchQueryProvider = StateProvider<String>((ref) => '');
 
 final playListProvider = FutureProvider.autoDispose((ref) async {
   return await SQLHelper.getAllPlayList();
 });
 
-final channelListProvider = FutureProvider.autoDispose((ref) async {
-  return await SQLHelper.getAllChannel();
+final channelListProvider = FutureProvider<List<ChannelModel>>((ref) async {
+  return await SQLHelper().getAllChannel();
 });
 
 final channelCategoryListProvider =
@@ -26,12 +27,11 @@ final favListProvider =
   return await SQLHelper.getChannelFavList(fav);
 });
 
-
-
-final listFavProvider = StateNotifierProvider<FavoriteController, List<Map<String, dynamic>>>(
+final listFavProvider =
+    StateNotifierProvider<FavoriteController, List<Map<String, dynamic>>>(
         (ref) {
-      return FavoriteController();
-    });
+  return FavoriteController();
+});
 
 class FavoriteController extends StateNotifier<List<Map<String, dynamic>>> {
   FavoriteController() : super([]);
@@ -39,7 +39,7 @@ class FavoriteController extends StateNotifier<List<Map<String, dynamic>>> {
   void addToFav(int index, List<Map<String, dynamic>> data) {
     data[index]['isFavorite'] = true;
     final result =
-    data.where((element) => element['isFavorite'] == true).toList();
+        data.where((element) => element['isFavorite'] == true).toList();
     state = [...result];
   }
 
@@ -50,7 +50,7 @@ class FavoriteController extends StateNotifier<List<Map<String, dynamic>>> {
       }
     }
     final result =
-    state.where((element) => element['isFavorite'] == true).toList();
+        state.where((element) => element['isFavorite'] == true).toList();
     state = [...result];
   }
 }

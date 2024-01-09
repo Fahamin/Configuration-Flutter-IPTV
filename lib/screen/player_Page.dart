@@ -6,18 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import '../DB/database_Helper.dart';
-import '../Reverpod_Provider/provider_Handle.dart';
 import '../navigation/drawer_Menu.dart';
+import '../providers/provider_riverpod.dart';
 
-class PlayerPage2 extends StatefulWidget {
-  PlayerPage2({Key? key}) : super(key: key);
+class PlayerPage extends StatefulWidget {
+  PlayerPage({Key? key}) : super(key: key);
 
   @override
-  State<PlayerPage2> createState() => _PlayerPageState2();
+  State<PlayerPage> createState() => _PlayerPageState();
 }
 
-class _PlayerPageState2 extends State<PlayerPage2> {
+class _PlayerPageState extends State<PlayerPage> {
   late BetterPlayerController _betterPlayerController = BetterPlayerController(
     const BetterPlayerConfiguration(),
   );
@@ -26,11 +25,10 @@ class _PlayerPageState2 extends State<PlayerPage2> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
-        BetterPlayerDataSourceType.network, Get.arguments);
+
     _betterPlayerController = BetterPlayerController(
-        const BetterPlayerConfiguration(),
-        betterPlayerDataSource: betterPlayerDataSource);
+      const BetterPlayerConfiguration(),
+    );
     setState(() {
       _betterPlayerController.play();
     });
@@ -74,7 +72,8 @@ class _PlayerPageState2 extends State<PlayerPage2> {
                 Expanded(
                   child: Consumer(
                     builder: (context, ref, child) {
-                      final listProvider = ref.watch(channelListProvider);
+                      final listProvider =
+                          ref.watch(channelCategoryListProvider(Get.arguments));
                       return listProvider.when(
                           error: (str, error) => Text('Not Found'),
                           loading: () =>
@@ -127,10 +126,8 @@ class _PlayerPageState2 extends State<PlayerPage2> {
                                             ],
                                           ),
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               Center(
                                                   child: list[index]['logo']

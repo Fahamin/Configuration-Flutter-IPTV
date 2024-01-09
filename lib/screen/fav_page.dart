@@ -4,36 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:setup_config_wizard/DB/database_Helper.dart';
-import '../Reverpod_Provider/provider_Handle.dart';
-import '../Route_Manage/routes_Manage.dart';
-import '../navigation/drawer_Menu.dart';
 
-class ChannelPage extends ConsumerStatefulWidget {
-  ChannelPage({Key? key}) : super(key: key);
+import '../Navigation/drawer_Menu.dart';
+import '../providers/provider_riverpod.dart';
+import '../routes/routes.dart';
 
-  @override
-  ConsumerState<ChannelPage> createState() => _ChannelPageState();
-}
 
-class _ChannelPageState extends ConsumerState<ChannelPage> {
-  Color _iconColor = Colors.black;
-  late int isSave;
+class FavoritePage extends StatelessWidget {
+  const FavoritePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final channelList = ref.watch(channelListProvider);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("ALL Channel"),
+        title: Text("Favorite Channel"),
         centerTitle: true,
       ),
       drawer: NavDrawer(),
       body: Center(
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: channelList.when(
+        child: Consumer(
+          builder: (context, ref, chile) {
+            final channelList = ref.watch(favListProvider("1"));
+            return channelList.when(
                 data: (list) {
                   return GridView.builder(
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -43,7 +35,6 @@ class _ChannelPageState extends ConsumerState<ChannelPage> {
                           mainAxisSpacing: 5),
                       itemCount: list.length,
                       itemBuilder: (BuildContext ctx, index) {
-
                         return Padding(
                           padding: const EdgeInsets.all(18.0),
                           child: InkWell(
@@ -104,45 +95,6 @@ class _ChannelPageState extends ConsumerState<ChannelPage> {
                                         ),
                                       ],
                                     )),
-                                IconButton(
-                                  icon: isSave == 1
-                                      ? Icon(
-                                          Icons.favorite,
-                                          color: _iconColor,
-                                        )
-                                      : Icon(
-                                          Icons.favorite_border,
-                                          color: _iconColor,
-                                        ),
-                                  onPressed: () async {
-                                    isSave = list[index]['fav'];
-                                    debugPrint(isSave.toString());
-                                    if (list[index]['fav'] == "1") {
-                                      await SQLHelper.updateItem(
-                                          list[index]['id'],
-                                          list[index]['title'],
-                                          list[index]['link'],
-                                          list[index]['logo'],
-                                          list[index]['cat'],
-                                        false
-                                          );
-                                      setState(() {});
-                                    } else {
-
-                                      setState(() async {
-                                        await SQLHelper.updateItem(
-                                            list[index]['id'],
-                                            list[index]['title'],
-                                            list[index]['link'],
-                                            list[index]['logo'],
-                                            list[index]['cat'],
-                                            true);
-                                      });
-                                    }
-                                    debugPrint("fahim" +
-                                        list[index]['fav'].toString());
-                                  },
-                                ),
                               ],
                             ),
                           ),
@@ -152,7 +104,9 @@ class _ChannelPageState extends ConsumerState<ChannelPage> {
                 error: (error, str) => Text("Not Found"),
                 loading: () => Center(
                       child: CircularProgressIndicator(),
-                    ))),
+                    ));
+          },
+        ),
       ),
     );
   }

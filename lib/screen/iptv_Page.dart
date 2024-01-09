@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:setup_config_wizard/Pages/playlist_Page.dart';
+import 'package:setup_config_wizard/screen/playlist_Page.dart';
 
 import '../navigation/botom_Menu.dart';
 import '../navigation/drawer_Menu.dart';

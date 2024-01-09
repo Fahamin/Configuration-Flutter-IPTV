@@ -1,14 +1,11 @@
 import 'package:get/get.dart';
-import 'package:setup_config_wizard/Pages/fav_page.dart';
 
-import '../Pages/build_Page.dart';
-import '../Pages/home_Page.dart';
-import '../Pages/iptv_Page.dart';
-import '../Pages/m3u_Page.dart';
-import '../Pages/nexus_Addons.dart';
-import '../Pages/player_Page.dart';
-import '../Pages/player_Page2.dart';
-import '../Pages/playlist_Page.dart';
+import '../screen/fav_page.dart';
+import '../screen/iptv_Page.dart';
+import '../screen/m3u_Page.dart';
+import '../screen/player_Page.dart';
+import '../screen/player_Page2.dart';
+import '../screen/playlist_Page.dart';
 
 class Routes {
   static String homePage = '/homepage';
@@ -35,12 +32,7 @@ class Routes {
 }
 
 appRoutes() => [
-      GetPage(
-        name: Routes.homePage,
-        page: () => HomePage(),
-        transition: Transition.leftToRightWithFade,
-        transitionDuration: Duration(milliseconds: 500),
-      ),
+
       // GetPage(name: Routes.splashScreen, page: () => SplashScreen()),
       GetPage(
         name: Routes.m3uPage,
@@ -54,12 +46,7 @@ appRoutes() => [
         transition: Transition.leftToRightWithFade,
         transitionDuration: Duration(milliseconds: 500),
       ),
-      GetPage(
-        name: Routes.buildPage,
-        page: () => BuildPage(),
-        transition: Transition.leftToRightWithFade,
-        transitionDuration: Duration(milliseconds: 500),
-      ),
+
       GetPage(
         name: Routes.iptv,
         page: () => IptvPage(),
@@ -75,13 +62,6 @@ appRoutes() => [
       GetPage(
         name: Routes.player2,
         page: () => PlayerPage2(),
-        transition: Transition.leftToRightWithFade,
-        transitionDuration: Duration(milliseconds: 500),
-      ),
-
-      GetPage(
-        name: Routes.nexusAddons,
-        page: () => NexusAddons(),
         transition: Transition.leftToRightWithFade,
         transitionDuration: Duration(milliseconds: 500),
       ),
