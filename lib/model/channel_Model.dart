@@ -1,10 +1,10 @@
 class ChannelModel {
-  var id ;
-  var title = "title";
-  var link = "link";
-  var logo = "logo";
-  var cat = "cat";
-  var createdAt = "createdAt";
+  var id;
+  String? title = "title";
+  String? link = "link";
+  String? logo = "logo";
+  String? cat = "cat";
+  String? createdAt = "createdAt";
   var fav =0;
 
   factory ChannelModel.fromMap(Map<String, dynamic> maps) {

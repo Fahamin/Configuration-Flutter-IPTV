@@ -119,7 +119,7 @@ class _ChannelPageState extends ConsumerState<ChannelPage> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Center(
-                                                child: model.logo.isNotEmpty
+                                                child: model.logo!.isNotEmpty
                                                     ? CachedNetworkImage(
                                                         height: 40,
                                                         width: 40,
@@ -139,7 +139,7 @@ class _ChannelPageState extends ConsumerState<ChannelPage> {
                                                         color: Colors.blue,
                                                       )),
                                             Text(
-                                              model.title,
+                                              model.title!,
                                               style: TextStyle(
                                                 color: Colors.blue[600],
                                                 fontSize: 12,
@@ -160,18 +160,18 @@ class _ChannelPageState extends ConsumerState<ChannelPage> {
                                       onPressed: () async {
                                         model.fav==1
                                             ? await SQLHelper.updateItem(
-                                                model.id,
-                                                model.title,
-                                                model.link,
-                                                model.logo,
-                                                model.cat,
+                                                model.id!,
+                                                model.title!,
+                                                model.link!,
+                                                model.logo!,
+                                                model.cat!,
                                                 0)
                                             : await SQLHelper.updateItem(
-                                                model.id,
-                                                model.title,
-                                                model.link,
-                                                model.logo,
-                                                model.cat,
+                                                model.id!,
+                                                model.title!,
+                                                model.link!,
+                                                model.logo!,
+                                                model.cat!,
                                                 1);
 
                                         ref.refresh(channelListProvider);

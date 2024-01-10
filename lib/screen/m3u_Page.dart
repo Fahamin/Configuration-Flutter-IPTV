@@ -64,14 +64,17 @@ Future<void> _createPlayList(String name, String link) async {
   var data = await SQLHelper.checkPlayList(name);
 
   if (data.isEmpty) {
-    await SQLHelper.createPlayList(name);
     var m3u;
     final response = await http.get(Uri.parse(link));
     m3u = await M3uList.load(response.body);
+
+    await SQLHelper.createPlayList(name);
+
     for (var entry in m3u.items) {
       _addChannel(
           entry.title, entry.link, entry.attributes["tvg-logo"], name, 0);
     }
+
   }
   Get.toNamed(Routes.player, arguments: name);
 }

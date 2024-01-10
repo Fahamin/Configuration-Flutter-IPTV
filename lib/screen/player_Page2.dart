@@ -134,7 +134,7 @@ class _PlayerPageState2 extends ConsumerState<PlayerPage2> {
                                         betterPlayerDataSource =
                                         BetterPlayerDataSource(
                                             BetterPlayerDataSourceType.network,
-                                            model.link);
+                                            model.link!);
                                     _betterPlayerController =
                                         BetterPlayerController(
                                             const BetterPlayerConfiguration(),
@@ -171,7 +171,7 @@ class _PlayerPageState2 extends ConsumerState<PlayerPage2> {
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Center(
-                                                  child: model.logo.isNotEmpty
+                                                  child: model.logo!.isNotEmpty
                                                       ? CachedNetworkImage(
                                                           height: 40,
                                                           width: 40,
@@ -191,7 +191,7 @@ class _PlayerPageState2 extends ConsumerState<PlayerPage2> {
                                                           color: Colors.blue,
                                                         )),
                                               Text(
-                                                model.title,
+                                                model.title!,
                                                 style: TextStyle(
                                                   color: Colors.blue[600],
                                                   fontSize: 12,
@@ -212,18 +212,18 @@ class _PlayerPageState2 extends ConsumerState<PlayerPage2> {
                                         onPressed: () async {
                                           model.fav==1
                                               ? await SQLHelper.updateItem(
-                                                  model.id,
-                                                  model.title,
-                                                  model.link,
-                                                  model.logo,
-                                                  model.cat,
+                                                  model.id!,
+                                                  model.title!,
+                                                  model.link!,
+                                                  model.logo!,
+                                                  model.cat!,
                                                   0)
                                               : await SQLHelper.updateItem(
-                                                  model.id,
-                                                  model.title,
-                                                  model.link,
-                                                  model.logo,
-                                                  model.cat,
+                                                  model.id!,
+                                                  model.title!,
+                                                  model.link!,
+                                                  model.logo!,
+                                                  model.cat!,
                                                   1);
 
                                           ref.refresh(channelListProvider);
